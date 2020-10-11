@@ -29,6 +29,12 @@ There is no ':' command or any other defining word.
 25
 ```
 
+There is not yet a way to print a newline (like CR),
+but the main program does print a newline before it finishes.
+
+To annoy you and to help you debug, an error is printed (as a broken assertion)
+if you do not empty your stack at the end of your program.
+
 ## Summary
 
 The only data type on the stack is double-precision C++ floating point numbers.
@@ -49,6 +55,9 @@ for false) back on.
 
 `dup swap rot drop` --  The usual Forth combinators.
 
+Literal numbers composed of the range `[-0-9.]` (and containing
+at least one digit) push themselves onto the stack when executed.
+
 `.`  -- print a number from the stack, plus a space.
 
 ```
@@ -57,9 +66,6 @@ for false) back on.
 
 -- Any word starting with the back-quote is printed verbatim,
 without the initial back-quote, when the word is executed, plus a space.
-
-Literal number composed of the range `[-0-9.]` push themselves
-onto the stack when executed.
 
 #### Do Loops
 
