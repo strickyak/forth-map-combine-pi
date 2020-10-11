@@ -30,7 +30,7 @@ class Forth {
   void Define(string name, Program prog);
 
  private:
-  static constexpr int SIZE = 10;
+  static constexpr int SIZE = 64;
   double rstack[SIZE];
   double stack[SIZE];
   int sp, rsp, pc;

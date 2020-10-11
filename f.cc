@@ -95,6 +95,16 @@ Program Forth::Parse(const char* s) {
       act = [this, buf](){ str_print(buf.substr(1)); };
     } else {
       act = words[buf];
+      if (!act) {
+        // A lambda to runtime-bind the action.
+        act = [this, buf](){
+          Action a = words[buf];
+          assert(a);
+          Check();
+          a();
+          Check();
+        };
+      }
     }
     assert(act);
     prog.push_back(pair{buf, act});
