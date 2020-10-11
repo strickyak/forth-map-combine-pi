@@ -11,7 +11,6 @@ using std::pair;
 using std::string;
 using std::vector;
 
-// typedef void (*Action)();
 using Action = function<void()>;
 using Program = vector<pair<string, Action>>;
 
@@ -22,14 +21,18 @@ class Forth {
   void Run(const Program& program);
   void Push(double x);
   double Pop();
+  void RPush(double x);
+  double RPop();
   void Check();
-  void Say();
+  void DebugShow();
   void Define(string name, Program prog);
 
  private:
   static constexpr int SIZE = 10;
+  double rstack[SIZE];
   double stack[SIZE];
-  int sp;
+  int sp, rsp, pc;
+  const Program* prog;
   map<string, Action> words;
 };
 

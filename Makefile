@@ -4,7 +4,7 @@ forth: f.h f.cc main.cc Makefile
 	g++ -std=c++17 f.cc main.cc -o forth
 
 demo:
-	./forth plus '+' squared 'dup *' "1 dup plus squared squared squared ."
+	./forth -v plus '+' squared 'dup *' "1 dup plus squared squared squared ."
 
 _rcs:
 	ci-l f.h f.cc main.cc Makefile
