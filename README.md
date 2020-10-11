@@ -51,7 +51,11 @@ for false) back on.
 
 `.`  -- print a number from the stack, plus a space.
 
-```whatever`  -- Any word starting with the back-quote ```` is printed,
+```
+`whatever
+```
+
+-- Any word starting with the back-quote is printed verbatim,
 without the initial back-quote, when the word is executed, plus a space.
 
 Literal number composed of the range `[-0-9.]` push themselves
