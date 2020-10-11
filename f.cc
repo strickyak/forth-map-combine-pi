@@ -4,12 +4,14 @@
 
 bool FlagVerbose;
 
-Forth::Forth() {
-  rsp = sp = 1;
+Forth::Forth(NumPrinter npr, StrPrinter spr)
+  : num_print(npr), str_print(spr)
+{
+  rsp = sp = 1, pc = 0;
   for (int i = 0; i < SIZE; i++ ) rstack[i] = stack[i] = 0.0;
   words = map<string, Action>({
     {"dup", [this]() { Push(stack[sp-1]); }},
-    {".", [this]() { printf("%.18g ", Pop()); }},
+    {".", [this]() { num_print(Pop()); }},
     {"+", [this]() { Push(Pop() + Pop()); }},
     {"*", [this]() { Push(Pop() * Pop()); }},
     {"-", [this]() { double b=Pop(); double a=Pop(); Push(a - b); }},
@@ -83,17 +85,19 @@ Program Forth::Parse(const char* s) {
     while (*s > 32) {
       buf.push_back(*s++);
     }
+    LOG(stderr, "compiling: {%s}\n", buf.c_str());
 
     Action act;
     double x;
     if (parseNum(buf.c_str(), &x)) {
       act = [this, x](){ Push(x); };
+    } else if (buf.length() > 1 && buf[0]=='`') {
+      act = [this, buf](){ str_print(buf.substr(1)); };
     } else {
       act = words[buf];
     }
     assert(act);
     prog.push_back(pair{buf, act});
-    LOG(stderr, "compiled: `%s`\n", buf.c_str());
   }
   return prog;
 }

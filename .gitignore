@@ -2,3 +2,5 @@ a.out
 *.o
 *,v
 RCS/
+forth
+test
