@@ -26,6 +26,7 @@ class Forth {
   void RPush(double x);
   double RPop();
   void Check();
+  void CheckEmpty();
   void DebugShow();
   void Define(string name, Program prog);
 

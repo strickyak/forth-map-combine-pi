@@ -30,4 +30,5 @@ int main(int argc, const char* argv[]) {
   auto prog = f.Parse(argv[argc-1]);
   f.Run(prog);
   printf("\n");
+  f.CheckEmpty();  // Error if the program did not clean up its stack.
 }

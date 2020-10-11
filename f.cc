@@ -54,6 +54,7 @@ Forth::Forth(NumPrinter npr, StrPrinter spr)
         pc += 2;
                       }},
   });
+  CheckEmpty();
 }
 
 void Forth::Define(string name, Program prog) {
@@ -117,6 +118,11 @@ void Forth::Check() {
   assert(sp < SIZE-1);  // reserve [SIZE-1]
   assert(rsp >= 1);      // reserve [0]
   assert(rsp < SIZE-1);  // reserve [SIZE-1]
+}
+
+void Forth::CheckEmpty() {
+  assert(sp == 1);
+  assert(rsp == 1);
 }
 
 void Forth::Run(const Program& program) {

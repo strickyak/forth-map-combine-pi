@@ -20,6 +20,7 @@ void Test(const map<string, string>& defs, const char* prog, const char* want) {
     fprintf(stderr, "###### FAILS ######\n");
     exit(3);
   }
+  f.CheckEmpty();
 }
 
 int main(int argc, const char* argv[]) {
@@ -52,5 +53,13 @@ int main(int argc, const char* argv[]) {
       {"recurse", "dup 1 - factorial *"},
     };
     Test(defs, "10 factorial .", "3628800 ");
+  }
+
+  // tail recursion (not optimized).
+  {
+    map<string, string> defs = {
+      {"countdown", "dup . 1 - dup 0 > cond: countdown drop"},
+    };
+    Test(defs, "10 countdown", "10 9 8 7 6 5 4 3 2 1 ");
   }
 }
