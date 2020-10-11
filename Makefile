@@ -1,4 +1,4 @@
-all : forth test demo _rcs _okay
+all : pi forth test demo _rcs _okay
 
 forth: f.h f.cc main.cc Makefile
 	g++ -std=c++17 f.cc main.cc -o forth
@@ -17,4 +17,4 @@ _okay:
 	echo 250 OK
 
 clean:
-	rm -f *.o a.out forth test
+	rm -f *.o a.out forth test pi

@@ -16,7 +16,7 @@ int main(int argc, const char* argv[]) {
     return 13;
   }
 
-  NumPrinter npr = [](double x) {printf("%.18g ", x); };
+  NumPrinter npr = [](double x) {printf("%.20g ", x); };
   StrPrinter spr = [](const string& s) {printf("%s ", s.c_str()); };
   Forth f(npr, spr);
 
