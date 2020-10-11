@@ -24,6 +24,7 @@ class Forth {
   double Pop();
   void Check();
   void Say();
+  void Define(string name, Program prog);
 
  private:
   static constexpr int SIZE = 10;
@@ -31,3 +32,7 @@ class Forth {
   int sp;
   map<string, Action> words;
 };
+
+extern bool FlagVerbose;
+
+#define LOG if(FlagVerbose)fprintf

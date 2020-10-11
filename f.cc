@@ -1,6 +1,8 @@
 #include "f.h"
 #include <assert.h>
 
+bool FlagVerbose;
+
 Forth::Forth() {
   for (double& d : stack) d = 0;
   for (int i = 0; i < SIZE; i++ ) stack[i] = 0.0;
@@ -20,6 +22,11 @@ Forth::Forth() {
   });
 }
 
+void Forth::Define(string name, Program prog) {
+  words[name] = [this, prog]() {
+    Run(prog);
+  };
+}
 Program Forth::Parse(const char* s) {
   Program prog;
   while (true) {
@@ -35,7 +42,7 @@ Program Forth::Parse(const char* s) {
     Action act = words[buf];
     assert(act);
     prog.push_back(pair{buf, act});
-    fprintf(stderr, "compiled: `%s`\n", buf.c_str());
+    LOG(stderr, "compiled: `%s`\n", buf.c_str());
   }
   return prog;
 }
@@ -49,7 +56,7 @@ void Forth::Run(const Program& program) {
   Check();
   for (auto step : program) {
     const auto [name, act] = step;
-    fprintf(stderr, "----------  %s\n", name.c_str());
+    LOG(stderr, "----------  %s\n", name.c_str());
     act();
     Check();
     Say();
@@ -57,11 +64,11 @@ void Forth::Run(const Program& program) {
 }
 
 void Forth::Say() {
-  fprintf(stderr, "{ ");
+  LOG(stderr, "{ ");
   for (int i = 1; i < sp; i++) {
-    fprintf(stderr, "%g ", stack[i]);
+    LOG(stderr, "%g ", stack[i]);
   }
-  fprintf(stderr, "}\n");
+  LOG(stderr, "}\n");
 }
 
 void Forth::Push(double x) {
