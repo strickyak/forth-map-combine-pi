@@ -13,12 +13,13 @@ using std::vector;
 
 using Action = function<void()>;
 using Program = vector<pair<string, Action>>;
+using RandomNum = function<double()>;
 using NumPrinter = function<void(double)>;
 using StrPrinter = function<void(const string&)>;
 
 class Forth {
  public:
-  Forth(NumPrinter npr, StrPrinter spr);
+  Forth(RandomNum rn, NumPrinter npr, StrPrinter spr);
   Program Parse(const char* s);
   void Run(const Program& program);
   void Push(double x);
@@ -37,6 +38,7 @@ class Forth {
   int sp, rsp, pc;
   const Program* prog;
   map<string, Action> words;
+  RandomNum random_num;
   NumPrinter num_print;
   StrPrinter str_print;
 };

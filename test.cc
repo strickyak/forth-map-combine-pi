@@ -8,7 +8,7 @@ void Test(const map<string, string>& defs, const char* prog, const char* want) {
 
   NumPrinter npr = [&](double x) {char buf[1000]; sprintf(buf, "%.20g ", x); output += buf; };
   StrPrinter spr = [&](const string& s) {char buf[1000]; sprintf(buf, "%s ", s.c_str()); output += buf; };
-  Forth f(npr, spr);
+  Forth f(nullptr, npr, spr);
   for (const auto& [name, prog] : defs) {
     f.Define(name, f.Parse(prog.c_str()));
   }

@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <math.h>
 #include "f.h"
 
 int main(int argc, const char* argv[]) {
@@ -16,9 +17,10 @@ int main(int argc, const char* argv[]) {
     return 13;
   }
 
+  RandomNum rn = []() { return (double)rand() / (double)RAND_MAX; };
   NumPrinter npr = [](double x) {printf("%.20g ", x); };
   StrPrinter spr = [](const string& s) {printf("%s ", s.c_str()); };
-  Forth f(npr, spr);
+  Forth f(rn, npr, spr);
 
   for (int i = 1; i < argc-1; i+=2 ) {
     auto prog = f.Parse(argv[i+1]);

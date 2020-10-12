@@ -4,12 +4,13 @@
 
 bool FlagVerbose;
 
-Forth::Forth(NumPrinter npr, StrPrinter spr)
-  : num_print(npr), str_print(spr)
+Forth::Forth(RandomNum rn, NumPrinter npr, StrPrinter spr)
+  : random_num(rn), num_print(npr), str_print(spr)
 {
   rsp = sp = 1, pc = 0;
   for (int i = 0; i < SIZE; i++ ) rstack[i] = stack[i] = 0.0;
   words = map<string, Action>({
+    {"rand", [this]() { Push(random_num()); }},
     {"dup", [this]() { Push(stack[sp-1]); }},
     {".", [this]() { num_print(Pop()); }},
     {"+", [this]() { Push(Pop() + Pop()); }},
@@ -66,7 +67,7 @@ void Forth::Define(string name, Program prog) {
 static bool parseNum(const char* s, double*p) {
   bool has_digit = false;
   for (const char* t=s; *t; t++) {
-    if (!(*t=='-' || *t=='.' || '0'<=*t && *t<='9')) return false;
+    if (!(*t=='-' || *t=='.' || ('0'<=*t && *t<='9'))) return false;
     if ('0'<=*t && *t<='9') has_digit = true;
   }
   if (!has_digit) return false;
