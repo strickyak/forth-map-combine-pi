@@ -5,7 +5,7 @@ def PrintIncludes():
     print '''
 #include <assert.h>
 #include <stdio.h>
-#include "compiler.h"
+#include "runtime.h"
 '''
 
 def PrintForward(name):
@@ -22,7 +22,7 @@ def PrintFinish():
 def CompileWord(w):
     print '    // <<<<< %s >>>>>' % w
 
-    if re.search('^[0-9]+$', w):
+    if re.search('^[-]?[0-9][0-9.]*$', w):
         print '    p->Push(%s);' % w
 
     elif w == 'do':
@@ -64,6 +64,9 @@ def CompileWord(w):
 
     elif w == '+':
         print '    {double top = p->Pop(); p->Poke(p->Peek() + top);}'
+
+    elif w == '-':
+        print '    {double top = p->Pop(); p->Poke(p->Peek() - top);}'
 
     elif w == '*':
         print '    {double top = p->Pop(); p->Poke(p->Peek() * top);}'

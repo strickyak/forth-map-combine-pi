@@ -1,17 +1,17 @@
-: map  ( i -- o )
+: map  ( map-index-num -- output )
   drop rand dup *
        rand dup * +
   1 < ;
 
-: combine ( l r -- c )
+: combine ( left right -- combined )
   + ;
 
-: map_combine ( n -- c )
+: map_combine ( num-maps -- combined )
   0 swap 0 do
       i map combine
   loop ;
 
-: pi
+: pi  ( num-maps -- )
   dup map_combine swap / 4 * . ;
 
-100000000 pi
+1000000000 pi

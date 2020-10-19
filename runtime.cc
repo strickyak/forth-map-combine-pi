@@ -1,8 +1,9 @@
 #include <cstdio>
 #include <math.h>
 
-#include "compiler.h"
+#include "runtime.h"
 
+// The immediate part of the .4th file.
 extern void Forth_program(Zorth*);
 
 double RandomNumber(void* ptr) {
