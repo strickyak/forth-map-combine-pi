@@ -20,6 +20,7 @@ using StrPrinter = function<void(const string&)>;
 class Forth {
  public:
   Forth(RandomNum rn, NumPrinter npr, StrPrinter spr);
+  ~Forth();
   Program Parse(const char* s);
   void Run(const Program& program);
   void Push(double x);

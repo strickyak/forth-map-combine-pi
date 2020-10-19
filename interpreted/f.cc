@@ -58,6 +58,10 @@ Forth::Forth(RandomNum rn, NumPrinter npr, StrPrinter spr)
   CheckEmpty();
 }
 
+Forth::~Forth() {
+  CheckEmpty();
+}
+
 void Forth::Define(string name, Program prog) {
   words[name] = [this, prog]() {
     Run(prog);
